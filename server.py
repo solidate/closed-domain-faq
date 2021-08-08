@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 from haystack import Finder
 from haystack.document_store.memory import InMemoryDocumentStore
 from haystack.retriever.dense import EmbeddingRetriever
@@ -9,6 +10,9 @@ import pandas as pd
 app = FastAPI()
 
 global store,retr,pipe
+
+class Item(BaseModel):
+    query : str
 
 def _document_store(similarity="cosine",index="document",
                                             embedding_field="question_emb",
@@ -45,8 +49,14 @@ def startup_event():
     docs_to_index = df.to_dict(orient="records")
     store.write_documents(docs_to_index)
 
-@app.post('/search')
-def search(query:str):
+@app.get('/')
+def home():
+    return 'Go to /docs'
+
+@app.post('/search/')
+def search(item: Item):
+    item = item.dict()
+    query = item['query']
     global pipe
     prediction = pipe.run(query=query, top_k_retriever=1)
     prediction = prediction['answers'][0]['answer']
