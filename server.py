@@ -8,9 +8,7 @@ import pandas as pd
 
 app = FastAPI()
 
-store = None
-retr = None
-pipe = None
+global store,retr,pipe
 
 def _document_store(similarity="cosine",index="document",
                                             embedding_field="question_emb",
@@ -34,13 +32,14 @@ def _faq_pipeline(retriever=None):
 
 @app.on_event("startup")
 def startup_event():
+    global store,retr,pipe
     store = _document_store()
-    retr = _document_retriever(document_store=document_store, embedding_model="sentence-transformers/paraphrase-albert-small-v2")
-    pipeline = _faq_pipeline(retriever=retr)
+    retr = _document_retriever(document_store=store, embedding_model="sentence-transformers/paraphrase-albert-small-v2")
+    pipe =  _faq_pipeline(retriever=retr)
 
-    df = pd.read_csv('FAQ/FAQ_Shepell_workhealthlife.pdf')
+    df = pd.read_csv('FAQ/FAQ_data.csv')
     questions = list(df["question"].values)
-    df["question_emb"] = retriever.embed_queries(texts=questions)
+    df["question_emb"] = retr.embed_queries(texts=questions)
     df = df.rename(columns={"question": "text"})
     
     docs_to_index = df.to_dict(orient="records")
@@ -48,6 +47,7 @@ def startup_event():
 
 @app.post('/search')
 def search(query:str):
+    global pipe
     prediction = pipe.run(query=query, top_k_retriever=1)
     prediction = prediction['answers'][0]['answer']
     return {'answer':prediction}
