@@ -10,7 +10,6 @@ def install_packages():
     subprocess.run(['pip','install','-r','requirements.txt','-I','--no-cache-dir','--ignore-installed','--ignore-requires-python','--no-deps'])
 
 def main():
-    install_packages()
     start_backend()
     subprocess.run(['sleep','20'])
     
