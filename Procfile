@@ -1,1 +1,1 @@
-worker: python start.py
+web: python start.py && streamlit run app.py
