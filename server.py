@@ -1,4 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,Request
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from haystack import Finder
 from haystack.document_store.memory import InMemoryDocumentStore
@@ -8,8 +12,9 @@ from haystack.pipeline import FAQPipeline
 import pandas as pd
 
 app = FastAPI()
-
+templates = Jinja2Templates(directory="")
 global store,retr,pipe
+
 
 class Item(BaseModel):
     query : str
@@ -49,9 +54,11 @@ def startup_event():
     docs_to_index = df.to_dict(orient="records")
     store.write_documents(docs_to_index)
 
-@app.get('/')
-def home():
-    return 'Go to /docs'
+@app.get('/', response_class=HTMLResponse)
+def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+    # return 'Go to /docs'
 
 @app.post('/search/')
 def search(item: Item):

@@ -1,0 +1,15 @@
+artifact_uri: file:///workspace/closed-domain-faq/mlruns/0/fc1913cff96f426f9d9d8823fafc0ca7/artifacts
+end_time: 1628573199225
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: fc1913cff96f426f9d9d8823fafc0ca7
+run_uuid: fc1913cff96f426f9d9d8823fafc0ca7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1628573127733
+status: 3
+tags: []
+user_id: gitpod
