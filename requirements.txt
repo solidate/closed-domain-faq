@@ -43,3 +43,4 @@ websocket-client==1.1.0
 Werkzeug==0.16.1 
 streamlit==0.85.1 
 pymupdf==1.18.16 
+aiofiles==0.7.0
