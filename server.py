@@ -1,4 +1,4 @@
-from fastapi import FastAPI,Request
+from fastapi import FastAPI,Request,Form
 from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
@@ -9,9 +9,11 @@ from haystack.document_store.memory import InMemoryDocumentStore
 from haystack.retriever.dense import EmbeddingRetriever
 from haystack.utils import print_answers
 from haystack.pipeline import FAQPipeline
+from fastapi.staticfiles import StaticFiles
 import pandas as pd
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="")
 global store,retr,pipe
 
