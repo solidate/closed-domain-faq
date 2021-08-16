@@ -1,1 +1,1 @@
-web: sh start.sh && streamlit run app.py
+web: uvicorn server:app

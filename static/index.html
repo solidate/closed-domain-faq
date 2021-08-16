@@ -1,0 +1,91 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Closed DOmain FAQ Demo
+        </title>
+        <script>
+            function test(e){
+        ans_area = $('#parent-block');
+        code_area = $('#query-answer');
+        ans_area.hide();
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "/search/",
+            data: JSON.stringify({query: $("#query").val()}),
+            contentType: "application/json",
+            success: function(data)
+              {
+          
+                code_area.text(data['answer'])
+                ans_area.show();
+              }  
+          });
+        }
+        </script>
+    <style>
+        .form-control-borderless {
+            border: none;
+        }
+
+        .form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
+            border: none;
+            outline: none;
+            box-shadow: none;
+        }
+
+        .output {
+            border: 1px solid #999;
+            display: block;
+            padding: 20px;
+            white-space: pre-wrap;       /* Since CSS 2.1 */
+            white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+        }
+    </style>    
+    </head>
+    <body>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <div class="container">
+    <br/>
+    <h1 class="row justify-content-center" style="font-size: 80px; font-family: courier, monospace;">
+        Ask me!
+    </h1>
+	<div class="row justify-content-center">
+                        <div class="col-12 col-md-10 col-lg-8">
+                            <form class="card card-sm">
+                                <div class="card-body row no-gutters align-items-center">
+                                    
+                                    <div class="col">
+                                        <input class="form-control form-control-lg form-control-borderless" style="font-family: courier, monospace;" type="text" id="query" ria-describedby="query-help" placeholder="Type your query here...">
+                                    </div>
+                                    <!--end of col-->
+                                    <div class="col-auto">
+                                        <button class="btn btn-lg btn-success" style="font-family: courier, monospace;" type="submit" onclick="test(event)">Search</button>
+                                    </div>
+                                    <!--end of col-->
+                                </div>
+                            </form>
+                            
+                        </div>
+                        <!--end of col-->
+                        <div class="col-12 col-md-10 col-lg-8" style="padding-top: 20px;">
+                        <pre style="display:none" id="parent-block" > 
+                            <code id="query-answer" class="output">
+                      
+                            </code>
+                          </pre>
+                        </div>
+                    </div>
+</div>
+
+</body>
+
+</html>
