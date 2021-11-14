@@ -3,7 +3,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
-from haystack import Finder
 from haystack.document_store.memory import InMemoryDocumentStore
 from haystack.retriever.dense import EmbeddingRetriever
 from haystack.utils import print_answers
@@ -47,7 +46,7 @@ def startup_event():
     retr = _document_retriever(document_store=store, embedding_model="sentence-transformers/paraphrase-albert-small-v2")
     pipe =  _faq_pipeline(retriever=retr)
 
-    df = pd.read_csv('FAQ/FAQ_data.csv')
+    df = pd.read_csv('Data/faq.csv')
     questions = list(df["question"].values)
     df["question_emb"] = retr.embed_queries(texts=questions)
     df = df.rename(columns={"question": "text"})
@@ -66,7 +65,7 @@ def search(item: Item):
     item = item.dict()
     query = item['query']
     global pipe
-    prediction = pipe.run(query=query, top_k_retriever=1)
+    prediction = pipe.run(query=query, params={"Retriever": {"top_k": 10}})
     prediction = prediction['answers'][0]['answer']
     return {'answer':prediction}
     
