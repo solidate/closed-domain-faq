@@ -30,5 +30,5 @@ To use the application follow below mwntioned steps:
 
 ## Screenshot
 
-    ![](https://github.com/solidate/closed-domain-faq/blob/main/screenshots/record.gif)
+![](https://github.com/solidate/closed-domain-faq/blob/main/screenshots/record.gif)
 
