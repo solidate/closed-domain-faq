@@ -32,3 +32,13 @@ To use the application follow below mwntioned steps:
 
 ![](https://github.com/solidate/closed-domain-faq/blob/main/screenshots/record.gif)
 
+
+## Authors
+
+- [@keshav](https://www.github.com/solidate)
+
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
