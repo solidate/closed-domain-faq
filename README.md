@@ -36,6 +36,7 @@ To use the application follow below mwntioned steps:
 ## Authors
 
 - [@keshav](https://www.github.com/solidate)
+- [@jatin](https://www.github.com/jatindhankhar)
 
 
 ## License
